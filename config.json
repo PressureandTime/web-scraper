@@ -1,0 +1,25 @@
+{
+  "websites": [
+    {
+      "url": "https://www.hps.hr/novosti/akcije-planinarskih-udruga/",
+      "selectors": {
+        "eventContainer": ".content-list-item",
+        "eventName": ".title",
+        "eventDate": ".date",
+        "eventLink": ".title a",
+        "eventDescription": ".excerpt"
+      }
+    },
+
+    {
+      "url": "https://hpdlipa.hr/",
+      "selectors": {
+        "eventContainer": "#main_content > table > tbody > tr",
+        "eventName": "#main_content > table > tbody > h3",
+        "eventDate": "#main_content > table > tbody > h3",
+        "eventLink": "#main_content > table > tbody > tr:nth-child(5) > td > div > a",
+        "eventDescription": ".excerpt"
+      }
+    }
+  ]
+}
