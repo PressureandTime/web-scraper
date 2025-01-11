@@ -27,28 +27,6 @@
       }
     },
     {
-      "url": "https://hpdlipa.hr/",
-      "selectors": {
-        "eventContainer": ".post, article.type-post",
-        "eventName": "h1.entry-title, h2.post-title:first-child",
-        "eventDate": ".post-date time, .entry-date",
-        "eventLink": ".entry-title a, .post-title a",
-        "eventDescription": ".entry-content p:not(:contains('Opširnije')):not(:contains('Prijava'))"
-      },
-      "dataCleanup": {
-        "removeFromDescription": ["Opširnije", "Prijava"],
-        "extractTitleFromDescription": {
-          "pattern": "^(.*?)\\s*\\d{2}\\.\\d{2}\\.\\d{4}",
-          "fallback": "No title"
-        },
-        "deduplicate": {
-          "fields": ["title", "date", "description"],
-          "threshold": 0.95
-        },
-        "trimStart": [".", "(", ")"]
-      }
-    },
-    {
       "url": "https://zagreb-matica.hr/",
       "selectors": {
         "eventContainer": ".event-item, .activity-item, article.post, .type-post",
@@ -359,6 +337,28 @@
           "threshold": 0.95
         },
         "trimStart": [".", "(", ")"]
+      }
+    },
+    {
+      "url": "https://hpdlipa.hr/",
+      "selectors": {
+        "eventContainer": ".novosti-i-aktivnosti article, .novosti-i-aktivnosti .post",
+        "eventName": "h2:first-child, h3:first-child, strong:first-child",
+        "eventDate": "time[datetime], .date, span:contains('.'), strong:contains('.')",
+        "eventLink": "a[href*='plakat'], a[href*='pdf'], a[href*='izlet'], a[href*='pohod']",
+        "eventDescription": "article p:not(:contains('Preuzmite')):not(:contains('Opširnije')):not(:contains('Prijava'))"
+      },
+      "dataCleanup": {
+        "removeFromDescription": ["Opširnije", "Prijava", "Preuzmite plakat"],
+        "extractTitleFromDescription": {
+          "pattern": "^([^.\\d]+)(?=\\d{2}\\.\\d{2}\\.\\d{4})|^([^.]+)(?=\\.)",
+          "fallback": ""
+        },
+        "deduplicate": {
+          "fields": ["title", "date", "description", "link"],
+          "threshold": 0.85
+        },
+        "trimStart": [".", "(", ")", " "]
       }
     }
   ]
