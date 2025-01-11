@@ -1,6 +1,6 @@
 # Web Scraper
 
-A Node.js web scraper that extracts data from specified websites. Simply provide a URL as a command line argument, and the scraper will fetch and process the data according to the configured selectors.
+A Node.js web scraper that extracts data from specified websites. You can either scrape a single website by providing its URL or scrape all websites configured in your config.json.
 
 ## Installation
 
@@ -17,15 +17,21 @@ npm install
 
 ## Usage
 
-### Basic Usage
+### Single Website Scraping
 
-Run the scraper by providing a website URL as an argument:
+To scrape a single website, provide its URL as an argument:
 
 ```bash
 node index.js "https://example.com"
 ```
 
-The scraper will use the selectors defined in `config.json` for the specified URL. If no specific selectors are defined for the URL, it will use the default selectors from the first website configuration.
+### Bulk Website Scraping
+
+To scrape all websites defined in your config.json:
+
+```bash
+node scrape-all.js
+```
 
 ### Configuration
 
@@ -47,20 +53,21 @@ The `config.json` file contains selectors for different websites. Example struct
 
 ## Output
 
-The scraped data will be saved in the `data` directory.
+The scraped data will be saved in the `data` directory, with each website's data in a separate JSON file.
 
 ## Dependencies
 
 Main dependencies include:
-- `axios` - HTTP client for making requests
+- `puppeteer` - For browser automation and JavaScript rendering
 - `cheerio` - Fast and flexible HTML parsing
 
 For a complete list of dependencies, see `package.json`.
 
 ## Error Handling
 
-- The scraper will exit with an error if no URL is provided
-- Failed requests will be logged with appropriate error messages
+- Single website scraping will exit if no URL is provided
+- Bulk scraping will continue to the next website if one fails
+- All errors are logged to the console with descriptive messages
 
 ## Best Practices
 
