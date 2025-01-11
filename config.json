@@ -3,22 +3,21 @@
     {
       "url": "https://www.hps.hr/novosti/akcije-planinarskih-udruga/",
       "selectors": {
-        "eventContainer": ".content-list-item",
-        "eventName": ".title",
-        "eventDate": ".date",
-        "eventLink": ".title a",
-        "eventDescription": ".excerpt"
+        "eventContainer": "article, .content-list-item, .news-item",
+        "eventName": "h2, .title, .news-title",
+        "eventDate": "h3:contains('.'), .date, time, .news-date",
+        "eventLink": "a[href*='novosti'], a[href*='akcije'], .title a",
+        "eventDescription": ".excerpt, .content, .news-excerpt, article p"
       }
     },
-
     {
       "url": "https://hpdlipa.hr/",
       "selectors": {
-        "eventContainer": "#main_content > table > tbody > tr",
-        "eventName": "#main_content > table > tbody > h3",
-        "eventDate": "#main_content > table > tbody > h3",
-        "eventLink": "#main_content > table > tbody > tr:nth-child(5) > td > div > a",
-        "eventDescription": ".excerpt"
+        "eventContainer": ".post, article",
+        "eventName": "h1, h2, h3",
+        "eventDate": "p:contains('.')",
+        "eventLink": "a[href*='plakat'], a[href*='izlet'], a[href*='pohod']",
+        "eventDescription": ".post-content, .entry-content"
       }
     }
   ]
