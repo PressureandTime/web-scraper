@@ -61,7 +61,7 @@ class HikingEventScraper {
     const eventDate = await this.parseDate(dateStr);
     if (!eventDate) return false;
 
-    const currentDate = new Date('2025-01-11T11:53:22+01:00');
+    const currentDate = new Date();
 
     const eventDateOnly = new Date(
       eventDate.getFullYear(),
