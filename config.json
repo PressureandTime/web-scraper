@@ -109,10 +109,23 @@
       "url": "https://hpd-kapela.hr/",
       "selectors": {
         "eventContainer": ".post, article, .news-item, .trips-item",
-        "eventName": ".post-title, h1.entry-title, h2.post-title, strong:first-child",
-        "eventDate": ".post-date, time, span:contains('.'), p:contains('.')",
-        "eventLink": "a[href*='trips'], a[href*='izlet'], a[href*='pohod'], h2 a",
-        "eventDescription": ".post-content, .entry-content, article p, .trip-description"
+        "eventName": ".post-title, h1.entry-title, h2.post-title, strong:first-child, .trip-title",
+        "eventDate": ".post-date, time, span:contains('.'), p:contains('.'), .trip-date",
+        "eventLink": "a[href*='trips'], a[href*='izlet'], a[href*='pohod'], h2 a, a[href*='.pdf']",
+        "eventDescription": ".post-content, .entry-content, article p, .trip-description",
+        "fallbackTitle": ".trip-leader:contains('Voditelj:')"
+      },
+      "dataCleanup": {
+        "removeFromDescription": ["Opširnije", "Prijava"],
+        "trimStart": [".", "(", ")"],
+        "extractTitleFromDescription": {
+          "pattern": "^(.*?)\\s*\\d{2}\\.\\d{2}\\.\\d{4}",
+          "fallback": "No title"
+        },
+        "deduplicate": {
+          "fields": ["title", "date", "description"],
+          "threshold": 0.8
+        }
       }
     },
     {
