@@ -29,6 +29,66 @@
         "eventLink": "a[href*='izlet'], a[href*='pohod'], a[href*='dogadaj'], .elementor-post__read-more",
         "eventDescription": ".elementor-post__excerpt, .elementor-widget-text-editor, .entry-content"
       }
+    },
+    {
+      "url": "https://hpdrunolist.hr/",
+      "selectors": {
+        "eventContainer": ".event-item, .izlet-item, article.post",
+        "eventName": ".event-title, h1, h2, h3, h4, h5",
+        "eventDate": ".event-date, .date, time, p:contains('.')",
+        "eventLink": "a[href*='izlet'], a[href*='najava'], a[href*='dogadaj']",
+        "eventDescription": ".event-description, .post-content, .entry-content"
+      }
+    },
+    {
+      "url": "http://hpd-vihor.hr/",
+      "selectors": {
+        "eventContainer": ".post-item, article, .event",
+        "eventName": "h1.entry-title, h2.post-title, .event-title",
+        "eventDate": ".post-date, .event-date, time, span:contains('.')",
+        "eventLink": "a[href*='izlet'], a[href*='plan'], .more-link",
+        "eventDescription": ".post-content, .entry-content, .event-description"
+      }
+    },
+    {
+      "url": "https://www.hpdzeljeznicar.hr/",
+      "selectors": {
+        "eventContainer": ".post, article, .event-listing",
+        "eventName": ".post-title, h1, h2, .event-name",
+        "eventDate": ".post-date, .event-date, time, p:contains('.')",
+        "eventLink": "a[href*='izlet'], a[href*='plan'], a[href*='najava']",
+        "eventDescription": ".post-content, .event-description, .entry-content"
+      }
+    },
+    {
+      "url": "https://zagreb-matica.hr/",
+      "selectors": {
+        "eventContainer": ".event, article, .activity-item",
+        "eventName": ".event-title, h2, .activity-name",
+        "eventDate": ".event-date, time, span:contains('.')",
+        "eventLink": "a[href*='izlet'], a[href*='aktivnost'], a[href*='dogadaj']",
+        "eventDescription": ".event-description, .activity-content, .entry-content"
+      }
+    },
+    {
+      "url": "https://www.pdzagreb.hr/category/buduciizleti/",
+      "selectors": {
+        "eventContainer": "article.post, .type-post, .blog-post",
+        "eventName": "h1.entry-title, h2.post-title, .post-header h2",
+        "eventDate": ".post-date, time.entry-date, .date-meta, h1:contains('.'), h2:contains('.')",
+        "eventLink": "a[href*='izlet'], a.more-link, .post-title a",
+        "eventDescription": ".entry-content, .post-content, article p"
+      }
+    },
+    {
+      "url": "https://www.jelenak.rs/index.php?option=com_content&view=category&id=101&Itemid=1809",
+      "selectors": {
+        "eventContainer": ".item, .blog-item, article, .com-content-category-blog__item",
+        "eventName": ".page-header h2, .item-title, .entry-header h2",
+        "eventDate": ".create, .published, time, .modified, span:contains('.')",
+        "eventLink": "a[href*='izlet'], a[href*='akcija'], .readmore",
+        "eventDescription": ".item-body, .entry-content, .item-page p"
+      }
     }
   ]
 }
