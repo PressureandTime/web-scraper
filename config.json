@@ -89,6 +89,56 @@
         "eventLink": "a[href*='izlet'], a[href*='akcija'], .readmore",
         "eventDescription": ".item-body, .entry-content, .item-page p"
       }
+    },
+    {
+      "url": "https://hpd-kapela.hr/",
+      "selectors": {
+        "eventContainer": ".post, article, .news-item",
+        "eventName": ".post-title, h1.entry-title, h2",
+        "eventDate": ".post-date, time, span:contains('.'), p:contains('.')",
+        "eventLink": "a[href*='izlet'], a[href*='pohod'], a[href*='najava']",
+        "eventDescription": ".post-content, .entry-content, article p"
+      }
+    },
+    {
+      "url": "https://www.hpd-jastrebarsko.hr/",
+      "selectors": {
+        "eventContainer": ".post, article, .news-item, .event",
+        "eventName": "h2.entry-title, .post-title, h1, h2",
+        "eventDate": ".post-date, time.entry-date, span:contains('.'), strong:contains('.')",
+        "eventLink": "a[href*='izlet'], a[href*='pohod'], .more-link",
+        "eventDescription": ".entry-content, .post-content, .event-description"
+      }
+    },
+    {
+      "url": "https://www.hpd-bilo.hr/",
+      "selectors": {
+        "eventContainer": "article, .post, .type-post",
+        "eventName": "h2.entry-title, .post-title, h1.title",
+        "eventDate": ".post-date, time, span:contains('.'), h2:contains('.')",
+        "eventLink": "a[href*='izlet'], a[href*='pohod'], .more-link",
+        "eventDescription": ".entry-content, .post-content, .post-excerpt"
+      }
+    },
+    {
+      "url": "https://www.hpd-kamenar.hr/",
+      "selectors": {
+        "eventContainer": "article, .post, .news-item",
+        "eventName": "h1, h2, .post-title",
+        "eventDate": "h2:contains('.'), p:contains('.'), time, .post-date",
+        "eventLink": "a[href*='izlet'], a[href*='najava'], a[href*='pohod']",
+        "eventDescription": ".post-content, .entry-content, article p"
+      }
+    },
+    {
+      "url": "https://www.hpd-papuk.hr/",
+      "selectors": {
+        "eventContainer": "article.post, .type-post, .post-item",
+        "eventName": "h2.entry-title, .post-title, h1.title",
+        "eventDate": ".post-date, time, h2:contains('.'), p:contains('.')",
+        "eventLink": "a[href*='izlet'], a[href*='planinarenje'], .more-link",
+        "eventDescription": ".entry-content, .post-content, article p"
+      }
     }
   ]
 }
