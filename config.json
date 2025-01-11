@@ -3,80 +3,95 @@
     {
       "url": "https://www.hps.hr/novosti/akcije-planinarskih-udruga/",
       "selectors": {
-        "eventContainer": "article, .content-list-item, .news-item",
-        "eventName": "h2, .title, .news-title",
-        "eventDate": "h3:contains('.'), .date, time, .news-date",
-        "eventLink": "a[href*='novosti'], a[href*='akcije'], .title a",
-        "eventDescription": ".excerpt, .content, .news-excerpt, article p"
+        "eventContainer": "article, .content-list-item, .news-item, .post-item",
+        "eventName": "h1.title, h2.title, h3.title, .news-title:first-child, strong:first-child:contains('IZLET'), strong:first-child:contains('POHOD')",
+        "eventDate": "time[datetime], .date, .news-date, p:contains('.'), span:contains('.')",
+        "eventLink": "h2 a, .title a, .news-title a, a[href*='izlet'], a[href*='pohod']",
+        "eventDescription": ".excerpt p, .content p:not(:contains('Opširnije')):not(:contains('Prijava')), .post-content"
+      },
+      "dataCleanup": {
+        "removeFromDescription": ["Opširnije", "Prijava", "Više informacija"],
+        "extractContacts": {
+          "pattern": "(?:Info|Kontakt|Informacije):\\s*([^,]+),\\s*(\\d{2,3}[\\s-]*\\d{6,8})",
+          "fields": ["contactName", "contactPhone"]
+        }
       }
     },
     {
       "url": "https://hpdlipa.hr/",
       "selectors": {
-        "eventContainer": ".post, article",
-        "eventName": "h1, h2, h3",
-        "eventDate": "p:contains('.')",
-        "eventLink": "a[href*='plakat'], a[href*='izlet'], a[href*='pohod']",
-        "eventDescription": ".post-content, .entry-content"
+        "eventContainer": ".post, article.type-post",
+        "eventName": "h1.entry-title, h2.post-title:first-child",
+        "eventDate": ".post-date time, .entry-date",
+        "eventLink": ".entry-title a, .post-title a",
+        "eventDescription": ".entry-content p:not(:contains('Opširnije')):not(:contains('Prijava'))"
+      }
+    },
+    {
+      "url": "https://zagreb-matica.hr/",
+      "selectors": {
+        "eventContainer": ".event-item, .activity-item, article.post, .type-post",
+        "eventName": "h2.title:first-child, .main-title, h1.post-title, .event-title, strong:contains('IZLET'), strong:contains('POHOD')",
+        "eventDate": "time.event-date, .date-info, p:first-child:contains('.'), span:contains('.')",
+        "eventLink": ".event-link a, .post-title a, a[href*='images'], a[href*='izlet'], a[href*='pohod']",
+        "eventDescription": ".event-description p:not(:contains('Opširnije')):not(:contains('Prijava')), .post-content p:not(:contains('Opširnije')):not(:contains('Prijava')), .entry-content"
+      },
+      "dataCleanup": {
+        "removeFromDescription": ["Opširnije", "Prijava"],
+        "trimStart": [".", "(", ")"],
+        "extractContacts": {
+          "pattern": "Info:\\s*([^,]+),\\s*(\\d{2,3}\\s*\\d{6,8})",
+          "fields": ["contactName", "contactPhone"]
+        }
       }
     },
     {
       "url": "https://kpd.hr/",
       "selectors": {
-        "eventContainer": ".elementor-post, .elementor-widget-container article, .elementor-posts-container > article",
-        "eventName": ".elementor-post__title, .elementor-heading-title, h2.entry-title",
-        "eventDate": ".elementor-post-date, .elementor-icon-list-text:contains('.'), time.entry-date",
+        "eventContainer": ".elementor-post, article, .post-item",
+        "eventName": ".elementor-post__title, .elementor-heading-title, h2.entry-title, strong:contains('IZLET')",
+        "eventDate": ".elementor-post-date, .elementor-icon-list-text:contains('.'), time.entry-date, p:contains('.')",
         "eventLink": "a[href*='izlet'], a[href*='pohod'], a[href*='dogadaj'], .elementor-post__read-more",
-        "eventDescription": ".elementor-post__excerpt, .elementor-widget-text-editor, .entry-content"
+        "eventDescription": ".elementor-post__excerpt, .elementor-widget-text-editor, .entry-content, .post-content"
       }
     },
     {
       "url": "https://hpdrunolist.hr/",
       "selectors": {
-        "eventContainer": ".event-item, .izlet-item, article.post",
-        "eventName": ".event-title, h1, h2, h3, h4, h5",
-        "eventDate": ".event-date, .date, time, p:contains('.')",
-        "eventLink": "a[href*='izlet'], a[href*='najava'], a[href*='dogadaj']",
+        "eventContainer": ".event-item, .izlet-item, article.post, .post",
+        "eventName": ".event-title, h1.entry-title, h2.post-title, strong:first-child",
+        "eventDate": ".event-date, .date, time, span:contains('.'), p:contains('.')",
+        "eventLink": "a[href*='izlet'], a[href*='najava'], a[href*='dogadaj'], h2 a",
         "eventDescription": ".event-description, .post-content, .entry-content"
       }
     },
     {
       "url": "http://hpd-vihor.hr/",
       "selectors": {
-        "eventContainer": ".post-item, article, .event",
-        "eventName": "h1.entry-title, h2.post-title, .event-title",
-        "eventDate": ".post-date, .event-date, time, span:contains('.')",
-        "eventLink": "a[href*='izlet'], a[href*='plan'], .more-link",
+        "eventContainer": ".post-item, article, .event, .type-post",
+        "eventName": "h1.entry-title, h2.post-title, .event-title, strong:first-child",
+        "eventDate": ".post-date, .event-date, time, span:contains('.'), p:contains('.')",
+        "eventLink": "a[href*='izlet'], a[href*='plan'], .more-link, h2 a",
         "eventDescription": ".post-content, .entry-content, .event-description"
       }
     },
     {
       "url": "https://www.hpdzeljeznicar.hr/",
       "selectors": {
-        "eventContainer": ".post, article, .event-listing",
-        "eventName": ".post-title, h1, h2, .event-name",
-        "eventDate": ".post-date, .event-date, time, p:contains('.')",
-        "eventLink": "a[href*='izlet'], a[href*='plan'], a[href*='najava']",
+        "eventContainer": ".post, article, .event-listing, .type-post",
+        "eventName": ".post-title, h1.entry-title, h2.post-title, strong:first-child",
+        "eventDate": ".post-date, .event-date, time, span:contains('.'), p:contains('.')",
+        "eventLink": "a[href*='izlet'], a[href*='plan'], a[href*='najava'], h2 a",
         "eventDescription": ".post-content, .event-description, .entry-content"
-      }
-    },
-    {
-      "url": "https://zagreb-matica.hr/",
-      "selectors": {
-        "eventContainer": ".event, article, .activity-item",
-        "eventName": ".event-title, h2, .activity-name",
-        "eventDate": ".event-date, time, span:contains('.')",
-        "eventLink": "a[href*='izlet'], a[href*='aktivnost'], a[href*='dogadaj']",
-        "eventDescription": ".event-description, .activity-content, .entry-content"
       }
     },
     {
       "url": "https://www.pdzagreb.hr/category/buduciizleti/",
       "selectors": {
         "eventContainer": "article.post, .type-post, .blog-post",
-        "eventName": "h1.entry-title, h2.post-title, .post-header h2",
-        "eventDate": ".post-date, time.entry-date, .date-meta, h1:contains('.'), h2:contains('.')",
-        "eventLink": "a[href*='izlet'], a.more-link, .post-title a",
+        "eventName": "h1.entry-title, h2.post-title, .post-header h2, strong:first-child",
+        "eventDate": ".post-date, time.entry-date, .date-meta, p:contains('.')",
+        "eventLink": "a[href*='izlet'], a.more-link, .post-title a, h2 a",
         "eventDescription": ".entry-content, .post-content, article p"
       }
     },
@@ -84,29 +99,29 @@
       "url": "https://www.jelenak.rs/index.php?option=com_content&view=category&id=101&Itemid=1809",
       "selectors": {
         "eventContainer": ".item, .blog-item, article, .com-content-category-blog__item",
-        "eventName": ".page-header h2, .item-title, .entry-header h2",
-        "eventDate": ".create, .published, time, .modified, span:contains('.')",
-        "eventLink": "a[href*='izlet'], a[href*='akcija'], .readmore",
+        "eventName": ".page-header h2, .item-title, .entry-header h2, strong:first-child",
+        "eventDate": ".create, .published, time, .modified, p:contains('.')",
+        "eventLink": "a[href*='izlet'], a[href*='akcija'], .readmore, h2 a",
         "eventDescription": ".item-body, .entry-content, .item-page p"
       }
     },
     {
       "url": "https://hpd-kapela.hr/",
       "selectors": {
-        "eventContainer": ".post, article, .news-item",
-        "eventName": ".post-title, h1.entry-title, h2",
+        "eventContainer": ".post, article, .news-item, .trips-item",
+        "eventName": ".post-title, h1.entry-title, h2.post-title, strong:first-child",
         "eventDate": ".post-date, time, span:contains('.'), p:contains('.')",
-        "eventLink": "a[href*='izlet'], a[href*='pohod'], a[href*='najava']",
-        "eventDescription": ".post-content, .entry-content, article p"
+        "eventLink": "a[href*='trips'], a[href*='izlet'], a[href*='pohod'], h2 a",
+        "eventDescription": ".post-content, .entry-content, article p, .trip-description"
       }
     },
     {
       "url": "https://www.hpd-jastrebarsko.hr/",
       "selectors": {
         "eventContainer": ".post, article, .news-item, .event",
-        "eventName": "h2.entry-title, .post-title, h1, h2",
+        "eventName": "h2.entry-title, .post-title, h1.entry-title, strong:first-child",
         "eventDate": ".post-date, time.entry-date, span:contains('.'), strong:contains('.')",
-        "eventLink": "a[href*='izlet'], a[href*='pohod'], .more-link",
+        "eventLink": "a[href*='izlet'], a[href*='pohod'], .more-link, h2 a",
         "eventDescription": ".entry-content, .post-content, .event-description"
       }
     },
@@ -114,49 +129,49 @@
       "url": "https://www.hpd-bilo.hr/",
       "selectors": {
         "eventContainer": "article, .post, .type-post",
-        "eventName": "h2.entry-title, .post-title, h1.title",
-        "eventDate": ".post-date, time, span:contains('.'), h2:contains('.')",
-        "eventLink": "a[href*='izlet'], a[href*='pohod'], .more-link",
+        "eventName": "h2.entry-title, .post-title, h1.title, strong:first-child",
+        "eventDate": ".post-date, time, span:contains('.'), p:contains('.')",
+        "eventLink": "a[href*='izlet'], a[href*='pohod'], .more-link, h2 a",
         "eventDescription": ".entry-content, .post-content, .post-excerpt"
       }
     },
     {
       "url": "https://www.hpd-kamenar.hr/",
       "selectors": {
-        "eventContainer": "article, .post, .news-item",
-        "eventName": "h1, h2, .post-title",
-        "eventDate": "h2:contains('.'), p:contains('.'), time, .post-date",
-        "eventLink": "a[href*='izlet'], a[href*='najava'], a[href*='pohod']",
+        "eventContainer": "article, .post, .news-item, .event",
+        "eventName": "h1.entry-title, h2.post-title, .post-title, strong:first-child",
+        "eventDate": ".post-date, time, span:contains('.'), p:contains('.')",
+        "eventLink": "a[href*='izlet'], a[href*='najava'], a[href*='pohod'], h2 a",
         "eventDescription": ".post-content, .entry-content, article p"
       }
     },
     {
       "url": "https://www.hpd-papuk.hr/",
       "selectors": {
-        "eventContainer": "article.post, .type-post, .post-item",
-        "eventName": "h2.entry-title, .post-title, h1.title",
-        "eventDate": ".post-date, time, h2:contains('.'), p:contains('.')",
-        "eventLink": "a[href*='izlet'], a[href*='planinarenje'], .more-link",
+        "eventContainer": "article.post, .type-post, .post-item, .event",
+        "eventName": "h2.entry-title, .post-title, h1.title, strong:first-child",
+        "eventDate": ".post-date, time, span:contains('.'), p:contains('.')",
+        "eventLink": "a[href*='izlet'], a[href*='planinarenje'], .more-link, h2 a",
         "eventDescription": ".entry-content, .post-content, article p"
       }
     },
     {
       "url": "https://www.pdnaftas.org.rs/",
       "selectors": {
-        "eventContainer": "article, .post-item, .news-item",
-        "eventName": "h1.entry-title, h2.post-title, .post-header h2",
+        "eventContainer": "article, .post-item, .news-item, .event",
+        "eventName": "h1.entry-title, h2.post-title, .post-header h2, strong:first-child",
         "eventDate": ".post-date, time, span:contains('.'), p:contains('.')",
-        "eventLink": "a[href*='akcija'], a[href*='izlet'], a[href*='pohod']",
+        "eventLink": "a[href*='akcija'], a[href*='izlet'], a[href*='pohod'], h2 a",
         "eventDescription": ".entry-content, .post-content, article p"
       }
     },
     {
       "url": "https://www.stazeibogaze.info/",
       "selectors": {
-        "eventContainer": "article, .post, .type-post",
-        "eventName": "h1.entry-title, .post-title, h2.entry-title",
+        "eventContainer": "article, .post, .type-post, .event",
+        "eventName": "h1.entry-title, .post-title, h2.entry-title, strong:first-child",
         "eventDate": ".post-date, time, span:contains('.'), p:contains('.')",
-        "eventLink": "a[href*='staze'], a[href*='tura'], a[href*='akcija']",
+        "eventLink": "a[href*='staze'], a[href*='tura'], a[href*='akcija'], h2 a",
         "eventDescription": ".entry-content, .post-content, article p"
       }
     }
