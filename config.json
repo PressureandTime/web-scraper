@@ -14,7 +14,16 @@
         "extractContacts": {
           "pattern": "(?:Info|Kontakt|Informacije):\\s*([^,]+),\\s*(\\d{2,3}[\\s-]*\\d{6,8})",
           "fields": ["contactName", "contactPhone"]
-        }
+        },
+        "extractTitleFromDescription": {
+          "pattern": "^(.*?)\\s*\\d{2}\\.\\d{2}\\.\\d{4}",
+          "fallback": "No title"
+        },
+        "deduplicate": {
+          "fields": ["title", "date", "description"],
+          "threshold": 0.95
+        },
+        "trimStart": [".", "(", ")"]
       }
     },
     {
@@ -25,6 +34,18 @@
         "eventDate": ".post-date time, .entry-date",
         "eventLink": ".entry-title a, .post-title a",
         "eventDescription": ".entry-content p:not(:contains('Opširnije')):not(:contains('Prijava'))"
+      },
+      "dataCleanup": {
+        "removeFromDescription": ["Opširnije", "Prijava"],
+        "extractTitleFromDescription": {
+          "pattern": "^(.*?)\\s*\\d{2}\\.\\d{2}\\.\\d{4}",
+          "fallback": "No title"
+        },
+        "deduplicate": {
+          "fields": ["title", "date", "description"],
+          "threshold": 0.95
+        },
+        "trimStart": [".", "(", ")"]
       }
     },
     {
@@ -42,6 +63,14 @@
         "extractContacts": {
           "pattern": "Info:\\s*([^,]+),\\s*(\\d{2,3}\\s*\\d{6,8})",
           "fields": ["contactName", "contactPhone"]
+        },
+        "extractTitleFromDescription": {
+          "pattern": "^(.*?)\\s*\\d{2}\\.\\d{2}\\.\\d{4}",
+          "fallback": "No title"
+        },
+        "deduplicate": {
+          "fields": ["title", "date", "description"],
+          "threshold": 0.95
         }
       }
     },
@@ -53,6 +82,18 @@
         "eventDate": ".elementor-post-date, .elementor-icon-list-text:contains('.'), time.entry-date, p:contains('.')",
         "eventLink": "a[href*='izlet'], a[href*='pohod'], a[href*='dogadaj'], .elementor-post__read-more",
         "eventDescription": ".elementor-post__excerpt, .elementor-widget-text-editor, .entry-content, .post-content"
+      },
+      "dataCleanup": {
+        "removeFromDescription": ["Opširnije", "Prijava"],
+        "extractTitleFromDescription": {
+          "pattern": "^(.*?)\\s*\\d{2}\\.\\d{2}\\.\\d{4}",
+          "fallback": "No title"
+        },
+        "deduplicate": {
+          "fields": ["title", "date", "description"],
+          "threshold": 0.95
+        },
+        "trimStart": [".", "(", ")"]
       }
     },
     {
@@ -63,6 +104,18 @@
         "eventDate": ".event-date, .date, time, span:contains('.'), p:contains('.')",
         "eventLink": "a[href*='izlet'], a[href*='najava'], a[href*='dogadaj'], h2 a",
         "eventDescription": ".event-description, .post-content, .entry-content"
+      },
+      "dataCleanup": {
+        "removeFromDescription": ["Opširnije", "Prijava"],
+        "extractTitleFromDescription": {
+          "pattern": "^(.*?)\\s*\\d{2}\\.\\d{2}\\.\\d{4}",
+          "fallback": "No title"
+        },
+        "deduplicate": {
+          "fields": ["title", "date", "description"],
+          "threshold": 0.95
+        },
+        "trimStart": [".", "(", ")"]
       }
     },
     {
@@ -73,6 +126,18 @@
         "eventDate": ".post-date, .event-date, time, span:contains('.'), p:contains('.')",
         "eventLink": "a[href*='izlet'], a[href*='plan'], .more-link, h2 a",
         "eventDescription": ".post-content, .entry-content, .event-description"
+      },
+      "dataCleanup": {
+        "removeFromDescription": ["Opširnije", "Prijava"],
+        "extractTitleFromDescription": {
+          "pattern": "^(.*?)\\s*\\d{2}\\.\\d{2}\\.\\d{4}",
+          "fallback": "No title"
+        },
+        "deduplicate": {
+          "fields": ["title", "date", "description"],
+          "threshold": 0.95
+        },
+        "trimStart": [".", "(", ")"]
       }
     },
     {
@@ -83,6 +148,18 @@
         "eventDate": ".post-date, .event-date, time, span:contains('.'), p:contains('.')",
         "eventLink": "a[href*='izlet'], a[href*='plan'], a[href*='najava'], h2 a",
         "eventDescription": ".post-content, .event-description, .entry-content"
+      },
+      "dataCleanup": {
+        "removeFromDescription": ["Opširnije", "Prijava"],
+        "extractTitleFromDescription": {
+          "pattern": "^(.*?)\\s*\\d{2}\\.\\d{2}\\.\\d{4}",
+          "fallback": "No title"
+        },
+        "deduplicate": {
+          "fields": ["title", "date", "description"],
+          "threshold": 0.95
+        },
+        "trimStart": [".", "(", ")"]
       }
     },
     {
@@ -93,6 +170,18 @@
         "eventDate": ".post-date, time.entry-date, .date-meta, p:contains('.')",
         "eventLink": "a[href*='izlet'], a.more-link, .post-title a, h2 a",
         "eventDescription": ".entry-content, .post-content, article p"
+      },
+      "dataCleanup": {
+        "removeFromDescription": ["Opširnije", "Prijava"],
+        "extractTitleFromDescription": {
+          "pattern": "^(.*?)\\s*\\d{2}\\.\\d{2}\\.\\d{4}",
+          "fallback": "No title"
+        },
+        "deduplicate": {
+          "fields": ["title", "date", "description"],
+          "threshold": 0.95
+        },
+        "trimStart": [".", "(", ")"]
       }
     },
     {
@@ -103,6 +192,18 @@
         "eventDate": ".create, .published, time, .modified, p:contains('.')",
         "eventLink": "a[href*='izlet'], a[href*='akcija'], .readmore, h2 a",
         "eventDescription": ".item-body, .entry-content, .item-page p"
+      },
+      "dataCleanup": {
+        "removeFromDescription": ["Opširnije", "Prijava"],
+        "extractTitleFromDescription": {
+          "pattern": "^(.*?)\\s*\\d{2}\\.\\d{2}\\.\\d{4}",
+          "fallback": "No title"
+        },
+        "deduplicate": {
+          "fields": ["title", "date", "description"],
+          "threshold": 0.95
+        },
+        "trimStart": [".", "(", ")"]
       }
     },
     {
@@ -124,7 +225,7 @@
         },
         "deduplicate": {
           "fields": ["title", "date", "description"],
-          "threshold": 0.8
+          "threshold": 0.95
         }
       }
     },
@@ -136,6 +237,18 @@
         "eventDate": ".post-date, time.entry-date, span:contains('.'), strong:contains('.')",
         "eventLink": "a[href*='izlet'], a[href*='pohod'], .more-link, h2 a",
         "eventDescription": ".entry-content, .post-content, .event-description"
+      },
+      "dataCleanup": {
+        "removeFromDescription": ["Opširnije", "Prijava"],
+        "extractTitleFromDescription": {
+          "pattern": "^(.*?)\\s*\\d{2}\\.\\d{2}\\.\\d{4}",
+          "fallback": "No title"
+        },
+        "deduplicate": {
+          "fields": ["title", "date", "description"],
+          "threshold": 0.95
+        },
+        "trimStart": [".", "(", ")"]
       }
     },
     {
@@ -146,6 +259,18 @@
         "eventDate": ".post-date, time, span:contains('.'), p:contains('.')",
         "eventLink": "a[href*='izlet'], a[href*='pohod'], .more-link, h2 a",
         "eventDescription": ".entry-content, .post-content, .post-excerpt"
+      },
+      "dataCleanup": {
+        "removeFromDescription": ["Opširnije", "Prijava"],
+        "extractTitleFromDescription": {
+          "pattern": "^(.*?)\\s*\\d{2}\\.\\d{2}\\.\\d{4}",
+          "fallback": "No title"
+        },
+        "deduplicate": {
+          "fields": ["title", "date", "description"],
+          "threshold": 0.95
+        },
+        "trimStart": [".", "(", ")"]
       }
     },
     {
@@ -156,6 +281,18 @@
         "eventDate": ".post-date, time, span:contains('.'), p:contains('.')",
         "eventLink": "a[href*='izlet'], a[href*='najava'], a[href*='pohod'], h2 a",
         "eventDescription": ".post-content, .entry-content, article p"
+      },
+      "dataCleanup": {
+        "removeFromDescription": ["Opširnije", "Prijava"],
+        "extractTitleFromDescription": {
+          "pattern": "^(.*?)\\s*\\d{2}\\.\\d{2}\\.\\d{4}",
+          "fallback": "No title"
+        },
+        "deduplicate": {
+          "fields": ["title", "date", "description"],
+          "threshold": 0.95
+        },
+        "trimStart": [".", "(", ")"]
       }
     },
     {
@@ -166,6 +303,18 @@
         "eventDate": ".post-date, time, span:contains('.'), p:contains('.')",
         "eventLink": "a[href*='izlet'], a[href*='planinarenje'], .more-link, h2 a",
         "eventDescription": ".entry-content, .post-content, article p"
+      },
+      "dataCleanup": {
+        "removeFromDescription": ["Opširnije", "Prijava"],
+        "extractTitleFromDescription": {
+          "pattern": "^(.*?)\\s*\\d{2}\\.\\d{2}\\.\\d{4}",
+          "fallback": "No title"
+        },
+        "deduplicate": {
+          "fields": ["title", "date", "description"],
+          "threshold": 0.95
+        },
+        "trimStart": [".", "(", ")"]
       }
     },
     {
@@ -176,6 +325,18 @@
         "eventDate": ".post-date, time, span:contains('.'), p:contains('.')",
         "eventLink": "a[href*='akcija'], a[href*='izlet'], a[href*='pohod'], h2 a",
         "eventDescription": ".entry-content, .post-content, article p"
+      },
+      "dataCleanup": {
+        "removeFromDescription": ["Opširnije", "Prijava"],
+        "extractTitleFromDescription": {
+          "pattern": "^(.*?)\\s*\\d{2}\\.\\d{2}\\.\\d{4}",
+          "fallback": "No title"
+        },
+        "deduplicate": {
+          "fields": ["title", "date", "description"],
+          "threshold": 0.95
+        },
+        "trimStart": [".", "(", ")"]
       }
     },
     {
@@ -186,6 +347,18 @@
         "eventDate": ".post-date, time, span:contains('.'), p:contains('.')",
         "eventLink": "a[href*='staze'], a[href*='tura'], a[href*='akcija'], h2 a",
         "eventDescription": ".entry-content, .post-content, article p"
+      },
+      "dataCleanup": {
+        "removeFromDescription": ["Opširnije", "Prijava"],
+        "extractTitleFromDescription": {
+          "pattern": "^(.*?)\\s*\\d{2}\\.\\d{2}\\.\\d{4}",
+          "fallback": "No title"
+        },
+        "deduplicate": {
+          "fields": ["title", "date", "description"],
+          "threshold": 0.95
+        },
+        "trimStart": [".", "(", ")"]
       }
     }
   ]
