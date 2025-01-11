@@ -139,6 +139,26 @@
         "eventLink": "a[href*='izlet'], a[href*='planinarenje'], .more-link",
         "eventDescription": ".entry-content, .post-content, article p"
       }
+    },
+    {
+      "url": "https://www.pdnaftas.org.rs/",
+      "selectors": {
+        "eventContainer": "article, .post-item, .news-item",
+        "eventName": "h1.entry-title, h2.post-title, .post-header h2",
+        "eventDate": ".post-date, time, span:contains('.'), p:contains('.')",
+        "eventLink": "a[href*='akcija'], a[href*='izlet'], a[href*='pohod']",
+        "eventDescription": ".entry-content, .post-content, article p"
+      }
+    },
+    {
+      "url": "https://www.stazeibogaze.info/",
+      "selectors": {
+        "eventContainer": "article, .post, .type-post",
+        "eventName": "h1.entry-title, .post-title, h2.entry-title",
+        "eventDate": ".post-date, time, span:contains('.'), p:contains('.')",
+        "eventLink": "a[href*='staze'], a[href*='tura'], a[href*='akcija']",
+        "eventDescription": ".entry-content, .post-content, article p"
+      }
     }
   ]
 }
