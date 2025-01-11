@@ -19,6 +19,16 @@
         "eventLink": "a[href*='plakat'], a[href*='izlet'], a[href*='pohod']",
         "eventDescription": ".post-content, .entry-content"
       }
+    },
+    {
+      "url": "https://kpd.hr/",
+      "selectors": {
+        "eventContainer": ".elementor-post, .elementor-widget-container article, .elementor-posts-container > article",
+        "eventName": ".elementor-post__title, .elementor-heading-title, h2.entry-title",
+        "eventDate": ".elementor-post-date, .elementor-icon-list-text:contains('.'), time.entry-date",
+        "eventLink": "a[href*='izlet'], a[href*='pohod'], a[href*='dogadaj'], .elementor-post__read-more",
+        "eventDescription": ".elementor-post__excerpt, .elementor-widget-text-editor, .entry-content"
+      }
     }
   ]
 }
