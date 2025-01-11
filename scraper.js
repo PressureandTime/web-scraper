@@ -1,32 +1,43 @@
 const puppeteer = require('puppeteer');
 const fs = require('fs').promises;
 const path = require('path');
+const Logger = require('./logger');
 
 class HikingEventScraper {
   constructor(config) {
     this.config = config;
     this.dataDir = path.join(__dirname, 'data');
+    this.logger = new Logger();
   }
 
   async init() {
-    await fs.mkdir(this.dataDir, { recursive: true });
-    this.browser = await puppeteer.launch({
-      headless: false,
-      args: ['--no-sandbox', '--disable-setuid-sandbox'],
-      defaultViewport: {
-        width: 1920,
-        height: 1080,
-      },
-    });
+    try {
+      await this.logger.init();
+      await fs.mkdir(this.dataDir, { recursive: true });
+      await this.logger.info('Initializing browser...');
+      this.browser = await puppeteer.launch({
+        headless: false,
+        args: ['--no-sandbox', '--disable-setuid-sandbox'],
+        defaultViewport: {
+          width: 1920,
+          height: 1080,
+        },
+      });
+    } catch (error) {
+      await this.logger.error('Failed to initialize scraper:', error);
+      throw error;
+    }
   }
 
   async close() {
     if (this.browser) {
+      await this.logger.info('Closing browser...');
       await this.browser.close();
+      await this.logger.info('Browser closed successfully');
     }
   }
 
-  parseDate(dateStr) {
+  async parseDate(dateStr) {
     try {
       const cleanDate = dateStr.trim().replace(/\.$/, '');
       const parts = cleanDate.split('.');
@@ -35,19 +46,19 @@ class HikingEventScraper {
       const year = parseInt(parts[2], 10);
 
       if (isNaN(day) || isNaN(month) || isNaN(year)) {
-        console.error('Invalid date parts:', dateStr, parts);
+        await this.logger.error(`Invalid date parts: ${dateStr}`, { parts });
         return null;
       }
 
       return new Date(year, month - 1, day);
     } catch (error) {
-      console.error('Error parsing date:', dateStr, error);
+      await this.logger.error(`Error parsing date: ${dateStr}`, error);
       return null;
     }
   }
 
-  isUpcomingEvent(dateStr) {
-    const eventDate = this.parseDate(dateStr);
+  async isUpcomingEvent(dateStr) {
+    const eventDate = await this.parseDate(dateStr);
     if (!eventDate) return false;
 
     const currentDate = new Date('2025-01-11T11:53:22+01:00');
@@ -74,7 +85,7 @@ class HikingEventScraper {
         'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
       );
 
-      console.log(`Navigating to ${website.url}`);
+      await this.logger.info(`Navigating to ${website.url}`);
       await page.goto(website.url, {
         waitUntil: ['networkidle0', 'domcontentloaded'],
         timeout: 30000,
@@ -85,7 +96,10 @@ class HikingEventScraper {
 
       // Get all text content for debugging
       const pageText = await page.evaluate(() => document.body.textContent);
-      console.log('Initial page content:', pageText.substring(0, 500));
+      await this.logger.info(
+        `Initial page content (first 500 chars): ${pageText.substring(0, 500)}`
+      );
+      await this.logger.info(`Total page content length: ${pageText.length} characters`);
 
       const events = await page.evaluate(() => {
         const events = [];
@@ -158,7 +172,6 @@ class HikingEventScraper {
                   link,
                   description: description || '',
                 });
-                console.log(`Found event: ${title} (${date})`);
               }
             }
           }
@@ -167,19 +180,40 @@ class HikingEventScraper {
         return events;
       });
 
-      console.log(`Found ${events.length} total events`);
+      // Log events found
+      await this.logger.info(`Found ${events.length} events on the page`);
 
-      const upcomingEvents = events.filter((event) => {
-        const isUpcoming = this.isUpcomingEvent(event.date);
+      await this.logger.info(`Found ${events.length} total events`);
+      if (events.length > 0) {
+        const dates = events.map((e) => e.date);
+        await this.logger.info(`Event date range: ${Math.min(...dates)} to ${Math.max(...dates)}`);
+      }
+
+      const upcomingEvents = [];
+      for (const event of events) {
+        const isUpcoming = await this.isUpcomingEvent(event.date);
         if (!isUpcoming) {
-          console.log(`Filtering out past event: ${event.title} (${event.date})`);
+          await this.logger.info(`Filtering out past event: ${event.title} (${event.date})`);
         } else {
-          console.log(`Found upcoming event: ${event.title} (${event.date})`);
+          await this.logger.info(`Found upcoming event: ${event.title} (${event.date})`);
+          upcomingEvents.push(event);
         }
-        return isUpcoming;
-      });
+      }
 
-      console.log(`${upcomingEvents.length} upcoming events found`);
+      await this.logger.info(`${upcomingEvents.length} upcoming events found`);
+      if (upcomingEvents.length > 0) {
+        await this.logger.info(
+          `Upcoming events: ${JSON.stringify(
+            upcomingEvents.map((e) => ({
+              title: e.title,
+              date: e.date,
+              link: e.link,
+            })),
+            null,
+            2
+          )}`
+        );
+      }
       return upcomingEvents;
     } catch (error) {
       console.error(`Error scraping ${website.url}:`, error);
@@ -202,8 +236,12 @@ class HikingEventScraper {
   async run() {
     try {
       await this.init();
+      await this.logger.info('Starting scraper with test log message');
+      await this.logger.warn('This is a test warning message');
+      await this.logger.error('This is a test error message');
 
       if (!this.config.websites || this.config.websites.length === 0) {
+        await this.logger.error('No websites configured for scraping');
         throw new Error('No websites configured for scraping');
       }
 
@@ -211,21 +249,22 @@ class HikingEventScraper {
         try {
           new URL(website.url);
         } catch (e) {
+          await this.logger.error(`Invalid URL provided: ${website.url}`);
           throw new Error(`Invalid URL provided: ${website.url}`);
         }
 
-        console.log(`Scraping events from ${website.url}`);
+        await this.logger.info(`Scraping events from ${website.url}`);
         const events = await this.scrapeEvents(website);
 
         if (events.length > 0) {
           const sourceName = new URL(website.url).hostname.replace(/[^a-z0-9]/gi, '_');
           await this.saveEvents(events, sourceName);
         } else {
-          console.log('No events found');
+          await this.logger.info('No events found');
         }
       }
     } catch (error) {
-      console.error('Scraper error:', error);
+      await this.logger.error(`Scraper error: ${error.message}`, error);
       throw error;
     } finally {
       await this.close();
